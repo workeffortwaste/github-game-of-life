@@ -1,4 +1,4 @@
-// GitHub Game of Life - 1.0.1
+// GitHub Game of Life - 1.0.2
 // Chris Johnson
 // @defaced / defaced.dev / github.com/workeffortwaste
 (function () {
@@ -47,7 +47,11 @@
       for (let i = 0; i < contributions.length; i++) {
         const days = contributions[i].getElementsByTagName('rect')
         for (let d = 0; d < 7; d++) { // Magic number - 7 days of the week.
-          try { days[d].setAttribute('fill', nextGenerationArray[i][d] ? '#40c463' : '#ebedf0') } catch {}
+          if (document.getElementsByTagName('html')[0].getAttribute('data-color-mode') === 'dark') {
+            try { days[d].setAttribute('fill', nextGenerationArray[i][d] ? '#40c463' : '#161b22') } catch {}
+          } else {
+            try { days[d].setAttribute('fill', nextGenerationArray[i][d] ? '#40c463' : '#ebedf0') } catch {}
+          }
         }
       }
     }
