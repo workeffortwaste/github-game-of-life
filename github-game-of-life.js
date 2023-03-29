@@ -1,33 +1,33 @@
-// GitHub Game of Life - 1.0.3
+// GitHub Game of Life - 1.0.4
 // Chris Johnson
 // @defaced / defaced.dev / github.com/workeffortwaste
 (function () {
   const startGgol = () => {
     // Settings
-    const cols = 53
-    const rows = 7
+    const cols = 7
+    const rows = 53
 
     // Pull down the contributions from the graph.
-    const contributions = document.getElementsByClassName('js-calendar-graph-svg')[0].children[0].getElementsByTagName('g')
-
-    // Read contributions as columns from the contribution frame.
+    const contributions = document.getElementsByClassName('js-calendar-graph')[0].children[0].querySelectorAll('tbody tr')
+   
+    // Read contributions as rows from the contribution frame.
     const readContributions = (contributions) => {
       // Init output Arr.
       const output = []
 
       for (const contribution of contributions) {
-        const days = contribution.getElementsByTagName('rect')
+        const days = contribution.getElementsByTagName('td')
         const lifeRow = []
         for (const day of days) {
           // Convert to live or dead cells.
-          lifeRow.push(day.getAttribute('data-count') > 0 ? 1 : 0)
+          lifeRow.push(day.getAttribute('data-level') > 0 ? 1 : 0)
         }
         // Add column to output.
         output.push(lifeRow)
       }
 
-      // Fill in any blanks in the first and last rows.
-      for (let i = 0; i < 7; i++) {
+      //Fill in any blanks in the first and last rows.
+      for (let i = 0; i < 54; i++) {
         if (!output[0][i]) {
           output[0][i] = 0
         }
@@ -45,8 +45,8 @@
     // Write to the contributions graphic.
     const writeContributions = (contributions, nextGenerationArray) => {
       for (let i = 0; i < contributions.length; i++) {
-        const days = contributions[i].getElementsByTagName('rect')
-        for (let d = 0; d < 7; d++) { // Magic number - 7 days of the week.
+        const days = contributions[i].getElementsByTagName('td')
+        for (let d = 0; d < 54; d++) { // Magic number - 7 days of the week.
           if (document.getElementsByTagName('html')[0].getAttribute('data-color-mode') === 'dark') {
             try { days[d].setAttribute('data-level', nextGenerationArray[i][d] ? '2' : '0') } catch {}
           } else {
@@ -73,7 +73,7 @@
 
     const generateNextIteration = (grid) => {
       // Make empty array
-      const next = [...Array(53)].map(e => Array(7))
+      const next = [...Array(7)].map(e => Array(54))
 
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
@@ -121,5 +121,5 @@
   }
 
   const observer = new IntersectionObserver(observerGgol)
-  try { observer.observe(document.getElementsByClassName('js-calendar-graph-svg')[0]) } catch {}
+  try { observer.observe(document.getElementsByClassName('js-calendar-graph')[0]) } catch {}
 })()

@@ -1,7 +1,7 @@
 {
   "name": "GitHub Game of Life",
   "description": "Replace the GitHub contributions graph with Conway's Game of Life.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
